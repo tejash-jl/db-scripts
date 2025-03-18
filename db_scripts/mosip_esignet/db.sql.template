@@ -1,4 +1,4 @@
-CREATE DATABASE '&1'
+CREATE DATABASE $DB_NAME
 	ENCODING = 'UTF8' 
 	LC_COLLATE = 'en_US.UTF-8' 
 	LC_CTYPE = 'en_US.UTF-8' 
@@ -6,11 +6,11 @@ CREATE DATABASE '&1'
 	OWNER = postgres
 	TEMPLATE  = template0;
 
-COMMENT ON DATABASE '&1' IS 'e-Signet related data is stored in this database';
+COMMENT ON DATABASE $DB_NAME IS 'e-Signet related data is stored in this database';
 
-\c '&1' postgres
+\c $DB_NAME postgres
 
 DROP SCHEMA IF EXISTS esignet CASCADE;
 CREATE SCHEMA esignet;
 ALTER SCHEMA esignet OWNER TO postgres;
-ALTER DATABASE '&1' SET search_path TO esignet,pg_catalog,public;
+ALTER DATABASE $DB_NAME SET search_path TO esignet,pg_catalog,public;
