@@ -6,6 +6,7 @@
 
 \c postgres psqladmin
 
+DROP SCHEMA IF EXISTS certify CASCADE;
 CREATE SCHEMA certify;
 
 ALTER DATABASE postgres SET search_path TO certify,pg_catalog,public;
