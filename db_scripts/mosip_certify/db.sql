@@ -3,10 +3,10 @@
 -- file, You can obtain one at https://mozilla.org/MPL/2.0/.
 -- -------------------------------------------------------------------------------------------------
 
-\c :db postgres
 
+\c postgres psqladmin
 
 CREATE SCHEMA certify;
 
-ALTER DATABASE :db SET search_path TO certify,pg_catalog,public;
+ALTER DATABASE postgres SET search_path TO certify,pg_catalog,public;
 
