@@ -3,7 +3,7 @@
 -- file, You can obtain one at https://mozilla.org/MPL/2.0/.
 -- -------------------------------------------------------------------------------------------------
 
-\c :db postgres
+\c :db
 
 CREATE SCHEMA certify;
 
