@@ -1,6 +1,6 @@
 
-\c postgres psqladmin
+\c :db
 
 CREATE SCHEMA esignet;
 
-ALTER DATABASE postgres SET search_path TO esignet,pg_catalog,public;
+ALTER DATABASE :db SET search_path TO esignet,pg_catalog,public;
