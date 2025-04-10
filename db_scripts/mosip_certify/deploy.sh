@@ -18,10 +18,14 @@ fi
 #echo "$DB_NAME"
 
 # Check if schema exists
-SCHEMA_EXISTS=$(PGPASSWORD=$SU_USER_PWD psql --username=$SU_USER --host=$DB_SERVERIP --port=$DB_PORT --dbname=$DEFAULT_DB_NAME -tAc "SELECT 1 FROM pg_namespace WHERE nspname = '$DB_NAME'")
+SCHEMA_NAME="certify"
+
+SCHEMA_EXISTS=$(PGPASSWORD=$SU_USER_PWD psql --username=$SU_USER --host=$DB_SERVERIP --port=$DB_PORT --dbname=$DEFAULT_DB_NAME -tAc "SELECT 1 FROM information_schema.schemata WHERE schema_name = '$SCHEMA_NAME'")
 if [ "$SCHEMA_EXISTS" = "1" ]; then
     echo  " Schema \"$DB_NAME\" already exists. Exiting."
-    exit 0
+    exit 1
+else
+    echo "Schema '$SCHEMA_NAME' doesnt exists"
 fi
 
 echo "$DB_NAME"
