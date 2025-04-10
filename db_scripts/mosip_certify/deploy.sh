@@ -19,7 +19,6 @@ fi
 
 # Check if schema exists
 SCHEMA_EXISTS=$(PGPASSWORD=$SU_USER_PWD psql --username=$SU_USER --host=$DB_SERVERIP --port=$DB_PORT --dbname=$DEFAULT_DB_NAME -tAc "SELECT 1 FROM pg_namespace WHERE nspname = '$DB_NAME'")
-echo "SCHEMA_EXISTS value: $SCHEMA_EXISTS"
 if [ "$SCHEMA_EXISTS" = "1" ]; then
     echo  " Schema \"$DB_NAME\" already exists. Exiting."
     exit 0
