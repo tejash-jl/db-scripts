@@ -19,10 +19,12 @@ fi
 
 # Check if schema exists
 SCHEMA_EXISTS=$(PGPASSWORD=$SU_USER_PWD psql --username=$SU_USER --host=$DB_SERVERIP --port=$DB_PORT --dbname=$DEFAULT_DB_NAME -tAc "SELECT 1 FROM pg_namespace WHERE nspname = '$DB_NAME'")
+echo "SCHEMA_EXISTS value: $SCHEMA_EXISTS"
 if [ "$SCHEMA_EXISTS" = "1" ]; then
-    echo `date "+%m/%d/%Y %H:%M:%S"` ": Schema \"$DB_NAME\" already exists. Exiting."
-    exit 0
+    echo `date "+%m/%d/%Y %H:%M:%S"` ": Schema \"$DB_NAME\" already exists. Exiting."
+    exit 0
 fi
+
 echo "$DB_NAME"
 
 PGPASSWORD=$SU_USER_PWD psql -v ON_ERROR_STOP=1 -v db=$DB_NAME --username=$SU_USER --host=$DB_SERVERIP --port=$DB_PORT --dbname=$DEFAULT_DB_NAME -f db.sql 
