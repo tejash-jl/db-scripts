@@ -29,6 +29,7 @@ CREATE TABLE certify.ledger_issuance_table(
     revocation_reason character varying(255),
     revocation_proof character varying(512),
     credential_subject_hash character varying(512),
+    revoke_date timestamp NOT NULL,
     -- encoded_list TEXT NOT NULL,
     CONSTRAINT pk_credential_status_id PRIMARY KEY (id),
     CONSTRAINT uk_credential_issuer UNIQUE (credential_id, issuer_id)
@@ -56,5 +57,6 @@ COMMENT ON COLUMN certify.ledger_issuance_table.expiration_date IS 'Date and tim
 COMMENT ON COLUMN certify.ledger_issuance_table.revocation_timestamp IS 'Date and time when the credential was revoked (if applicable)';
 COMMENT ON COLUMN certify.ledger_issuance_table.revocation_reason IS 'Reason for revocation (if applicable)';
 COMMENT ON COLUMN certify.ledger_issuance_table.revocation_proof IS 'Cryptographic proof or hash representing the integrity of the revocation action';
+COMMENT ON COLUMN certify.ledger_issuance_table.revoke_date IS 'Date and time when the credential was revoked';
 -- COMMENT ON COLUMN certify.ledger_issuance_table.credential_subject_hash IS 'SHA-256 hash of the credentialSubject. Used to prevent reissuance of the same credential to the same subject.';
 COMMENT ON COLUMN certify.status_list_credential.encoded_list IS 'Multibase-encoded base64url representation of the GZIP-compressed bitstring values';
