@@ -5,7 +5,7 @@
 
 \c :db
 
-CREATE SCHEMA certify;
+CREATE SCHEMA IF NOT EXISTS certify;
 
 ALTER DATABASE :db SET search_path TO certify,pg_catalog,public;
 
