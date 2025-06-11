@@ -1,40 +1,29 @@
--- -------------------------------------------------------------------------------------------------
--- Database Name: inji_certify
--- Table Name : status_list_credential
--- Purpose : Stores BitString status lists for credential status tracking following the standards
---
--- Modified Date Modified By Comments / Remarks
--- ------------------------------------------------------------------------------------------
--- ------------------------------------------------------------------------------------------
-CREATE TABLE certify.status_list_credential (
-    id CHARACTER VARYING(255) NOT NULL,
-    issuer_id CHARACTER VARYING(255) NOT NULL,
-    type CHARACTER VARYING(100) NOT NULL DEFAULT 'BitstringStatusListCredential',
-    encoded_list TEXT NOT NULL,
-    list_size INTEGER NOT NULL,
-    status_purpose CHARACTER VARYING(50) NOT NULL,
-    status_size INTEGER DEFAULT 1,
-    status_messages JSONB,
-    valid_from TIMESTAMP NOT NULL,
-    valid_until TIMESTAMP,
-    ttl BIGINT,
-    CONSTRAINT pk_status_list_credential_id PRIMARY KEY (id),
-    CONSTRAINT uk_issuer_purpose UNIQUE (issuer_id, status_purpose)
+-- Create ENUM type for credential status
+CREATE TYPE credential_status_enum AS ENUM ('available', 'full');
+
+-- Create status_list_credential table
+CREATE TABLE status_list_credential (
+    id VARCHAR(255) PRIMARY KEY,          -- The unique ID (URL/DID/URN) extracted from the VC's 'id' field.
+    vc_document bytea NOT NULL,           -- Stores the entire Verifiable Credential JSON document.
+    credential_type VARCHAR(100) NOT NULL, -- Type of the status list (e.g., 'StatusList2021Credential')
+    status_purpose VARCHAR(100),             -- Intended purpose of this list within the system (e.g., 'revocation', 'suspension', 'general'). NULLABLE.
+    capacity BIGINT,                        --- length of status list
+    credential_status credential_status_enum, -- Use the created ENUM type here
+    cr_dtimes timestamp NOT NULL default now(),
+    upd_dtimes timestamp                    -- When this VC record was last updated in the system
 );
 
-CREATE INDEX idx_status_list_issuer ON certify.status_list_credential(issuer_id);
-CREATE INDEX idx_status_list_purpose ON certify.status_list_credential(status_purpose);
-CREATE INDEX idx_status_list_validity ON certify.status_list_credential(valid_from, valid_until);
+-- Add comments for documentation
+COMMENT ON TABLE status_list_credential IS 'Stores full Status List Verifiable Credentials, including their type and intended purpose within the system.';
+COMMENT ON COLUMN status_list_credential.id IS 'Unique identifier (URL/DID/URN) of the Status List VC (extracted from vc_document.id). Primary Key.';
+COMMENT ON COLUMN status_list_credential.vc_document IS 'The complete JSON document of the Status List Verifiable Credential.';
+COMMENT ON COLUMN status_list_credential.credential_type IS 'The type of the Status List credential, often found in vc_document.type (e.g., StatusList2021Credential).';
+COMMENT ON COLUMN status_list_credential.status_purpose IS 'The intended purpose assigned to this entire Status List within the system (e.g., revocation, suspension, general). This may be based on convention or system policy, distinct from the credentialStatus.statusPurpose used by individual credentials.';
+COMMENT ON COLUMN status_list_credential.cr_dtimes IS 'Timestamp when this Status List VC was first added/fetched into the local system.';
+COMMENT ON COLUMN status_list_credential.upd_dtimes IS 'Timestamp when this Status List VC record was last updated.';
 
-COMMENT ON TABLE certify.status_list_credential IS 'Contains BitString status lists for verifying credential status according to W3C BitString Status List standard';
-COMMENT ON COLUMN certify.status_list_credential.id IS 'Unique identifier for the status list credential (statusListCredential URL)';
-COMMENT ON COLUMN certify.status_list_credential.issuer_id IS 'Identifier of the credential issuer who created the status list';
-COMMENT ON COLUMN certify.status_list_credential.type IS 'Type of the credential, must include BitstringStatusListCredential';
-COMMENT ON COLUMN certify.status_list_credential.encoded_list IS 'Multibase-encoded base64url representation of the GZIP-compressed bitstring values';
-COMMENT ON COLUMN certify.status_list_credential.list_size IS 'Size of the BitString status list (minimum 16KB uncompressed)';
-COMMENT ON COLUMN certify.status_list_credential.status_purpose IS 'Purpose of the status list (refresh, revocation, suspension, message)';
-COMMENT ON COLUMN certify.status_list_credential.status_size IS 'Size of status entries in bits, defaults to 1 if not specified';
-COMMENT ON COLUMN certify.status_list_credential.status_messages IS 'JSON array containing possible status messages for message purpose';
-COMMENT ON COLUMN certify.status_list_credential.valid_from IS 'Earliest point in time at which the status list is valid (validFrom)';
-COMMENT ON COLUMN certify.status_list_credential.valid_until IS 'Latest point in time at which the status list is valid (validUntil)';
-COMMENT ON COLUMN certify.status_list_credential.ttl IS 'Time to live in milliseconds before a refresh should be attempted';
+-- Create indexes
+CREATE INDEX IF NOT EXISTS idx_slc_status_purpose ON status_list_credential(status_purpose);
+CREATE INDEX IF NOT EXISTS idx_slc_credential_type ON status_list_credential(credential_type);
+CREATE INDEX IF NOT EXISTS idx_slc_credential_status ON status_list_credential(credential_status);
+CREATE INDEX IF NOT EXISTS idx_slc_cr_dtimes ON status_list_credential(cr_dtimes);
