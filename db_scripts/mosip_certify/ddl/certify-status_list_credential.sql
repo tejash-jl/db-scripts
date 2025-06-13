@@ -1,5 +1,5 @@
 -- Create ENUM type for credential status
-CREATE TYPE credential_status_enum AS ENUM ('available', 'full');
+CREATE TYPE credentialstatus AS ENUM ('available', 'full');
 
 -- Create status_list_credential table
 CREATE TABLE status_list_credential (
@@ -8,7 +8,7 @@ CREATE TABLE status_list_credential (
     credential_type VARCHAR(100) NOT NULL, -- Type of the status list (e.g., 'StatusList2021Credential')
     status_purpose VARCHAR(100),             -- Intended purpose of this list within the system (e.g., 'revocation', 'suspension', 'general'). NULLABLE.
     capacity BIGINT,                        --- length of status list
-    credential_status credential_status_enum, -- Use the created ENUM type here
+    credential_status credentialstatus, -- Use the created ENUM type here
     cr_dtimes timestamp NOT NULL default now(),
     upd_dtimes timestamp                    -- When this VC record was last updated in the system
 );
