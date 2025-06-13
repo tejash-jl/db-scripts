@@ -1,5 +1,5 @@
 -- Create ENUM type for credential status
-CREATE TYPE credentialstatus AS ENUM ('available', 'full');
+CREATE TYPE credentialstatus AS ENUM ('AVAILABLE', 'FULL');
 
 -- Create status_list_credential table
 CREATE TABLE status_list_credential (
