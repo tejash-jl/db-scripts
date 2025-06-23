@@ -1,4 +1,4 @@
-
+create database :db;
 \c :db
 
 CREATE SCHEMA esignet;
