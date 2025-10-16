@@ -10,3 +10,4 @@
 \ir ddl/certify-key_store.sql 
 \ir ddl/certify-rendering_template.sql 
 \ir ddl/certify-status_list_available_indices.sql 
+\ir ddl/certify-credential_config.sql
