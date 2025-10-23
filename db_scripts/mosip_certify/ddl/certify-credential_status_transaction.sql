@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS credential_status_transaction (
     cr_dtimes TIMESTAMP NOT NULL DEFAULT NOW(),   -- Creation timestamp
     upd_dtimes TIMESTAMP,                          -- Update timestamp
     is_processed boolean NOT NULL DEFAULT FALSE,
-    processed_dtimes TIMESTAMP,
+    processed_dtimes TIMESTAMP
 );
 
 -- Add comments for documentation
