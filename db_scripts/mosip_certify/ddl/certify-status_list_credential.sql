@@ -1,24 +1,30 @@
+-- This Source Code Form is subject to the terms of the Mozilla Public
+-- License, v. 2.0. If a copy of the MPL was not distributed with this
+-- file, You can obtain one at https://mozilla.org/MPL/2.0/.
+-- -------------------------------------------------------------------------------------------------
+-- Database Name: inji_certify
+-- Table Name : status_list_credential
+-- Purpose    : status_list_credential to store status list credential
+--
+--
+-- Modified Date        Modified By         Comments / Remarks
+-- ------------------------------------------------------------------------------------------
+-- ------------------------------------------------------------------------------------------
 -- Create ENUM type for credential status
-CREATE TYPE credentialstatus AS ENUM ('AVAILABLE', 'FULL');
+CREATE TYPE credential_status_enum AS ENUM ('AVAILABLE', 'FULL');
 
 -- Create status_list_credential table
 CREATE TABLE status_list_credential (
     id VARCHAR(255) PRIMARY KEY,          -- The unique ID (URL/DID/URN) extracted from the VC's 'id' field.
-    vc_document TEXT NOT NULL,           -- Stores the entire Verifiable Credential JSON document.
+    vc_document VARCHAR NOT NULL,           -- Stores the entire Verifiable Credential JSON document.
     credential_type VARCHAR(100) NOT NULL, -- Type of the status list (e.g., 'StatusList2021Credential')
     status_purpose VARCHAR(100),             -- Intended purpose of this list within the system (e.g., 'revocation', 'suspension', 'general'). NULLABLE.
     capacity BIGINT,                        --- length of status list
-    credential_status credentialstatus, -- Use the created ENUM type here
+    credential_status credential_status_enum, -- Use the created ENUM type here
     cr_dtimes timestamp NOT NULL default now(),
     upd_dtimes timestamp                    -- When this VC record was last updated in the system
 );
-CREATE TABLE shedlock (
-    name VARCHAR(64) NOT NULL,
-    lock_until TIMESTAMP NOT NULL,
-    locked_at TIMESTAMP NOT NULL,
-    locked_by VARCHAR(255) NOT NULL,
-    PRIMARY KEY (name)
-);
+
 -- Add comments for documentation
 COMMENT ON TABLE status_list_credential IS 'Stores full Status List Verifiable Credentials, including their type and intended purpose within the system.';
 COMMENT ON COLUMN status_list_credential.id IS 'Unique identifier (URL/DID/URN) of the Status List VC (extracted from vc_document.id). Primary Key.';

@@ -1,3 +1,15 @@
+-- This Source Code Form is subject to the terms of the Mozilla Public
+-- License, v. 2.0. If a copy of the MPL was not distributed with this
+-- file, You can obtain one at https://mozilla.org/MPL/2.0/.
+-- -------------------------------------------------------------------------------------------------
+-- Database Name: inji_certify
+-- Table Name : status_list_available_indices
+-- Purpose    : status_list_available_indices to store status list available indices
+--
+--
+-- Modified Date        Modified By         Comments / Remarks
+-- ------------------------------------------------------------------------------------------
+-- ------------------------------------------------------------------------------------------
 -- Create status_list_available_indices table
 CREATE TABLE status_list_available_indices (
     id SERIAL PRIMARY KEY,                         -- Serial primary key

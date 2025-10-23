@@ -1,3 +1,15 @@
+-- This Source Code Form is subject to the terms of the Mozilla Public
+-- License, v. 2.0. If a copy of the MPL was not distributed with this
+-- file, You can obtain one at https://mozilla.org/MPL/2.0/.
+-- -------------------------------------------------------------------------------------------------
+-- Database Name: inji_certify
+-- Table Name : ledger
+-- Purpose    : Ledger to store status list credential entries
+--
+--
+-- Modified Date        Modified By         Comments / Remarks
+-- ------------------------------------------------------------------------------------------
+-- ------------------------------------------------------------------------------------------
 -- Create ledger table (insert only table, data once added will not be updated)
 CREATE TABLE ledger (
     id SERIAL PRIMARY KEY,                          -- Auto-incrementing serial primary key
