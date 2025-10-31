@@ -29,6 +29,16 @@ CREATE TABLE public_key_registry(
 	CONSTRAINT pk_public_key_registry PRIMARY KEY (id_hash, auth_factor)
 );
 
+CREATE TABLE kyc_auth ( 
+    kyc_token VARCHAR(255) PRIMARY KEY,
+    individual_id VARCHAR(255),
+    partner_specific_user_token VARCHAR(255),
+    response_time TIMESTAMP,
+    transaction_id VARCHAR(255),
+    validity INTEGER
+);
+
+
 COMMENT ON TABLE public_key_registry IS 'Contains id_hash and their respective PSU Tokens,public keys and wallet binding ids.';
 
 COMMENT ON COLUMN public_key_registry.id_hash IS 'Contains Id hash.';
