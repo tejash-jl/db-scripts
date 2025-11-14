@@ -8,8 +8,6 @@ create database :db;
 
 CREATE SCHEMA IF NOT EXISTS certify;
 
-GRANT USAGE ON SCHEMA certify TO grafana_read;
-GRANT SELECT ON ALL TABLES IN SCHEMA certify TO grafana_read;
 
 ALTER DATABASE :db SET search_path TO certify,pg_catalog,public;
 
@@ -34,3 +32,7 @@ CREATE FOREIGN TABLE verification_counters (
 )
 SERVER registry_server
 OPTIONS (schema_name 'public', table_name 'verification_counters');
+
+
+GRANT USAGE ON SCHEMA certify TO grafana_read;
+GRANT SELECT ON ALL TABLES IN SCHEMA certify TO grafana_read;
