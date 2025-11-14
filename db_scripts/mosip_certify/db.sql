@@ -21,6 +21,10 @@ CREATE USER MAPPING FOR CURRENT_USER
     SERVER registry_server
     OPTIONS (user 'postgres', password :'dbpass');
 
+CREATE USER MAPPING FOR grafana_read
+    SERVER registry_server
+    OPTIONS (user 'postgres', password :'dbpass');
+
 CREATE FOREIGN TABLE verification_counters (
     id          integer NOT NULL,
     created_at  timestamptz,
