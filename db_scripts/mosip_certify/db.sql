@@ -3,7 +3,16 @@
 -- License, v. 2.0. If a copy of the MPL was not distributed with this
 -- file, You can obtain one at https://mozilla.org/MPL/2.0/.
 -- -------------------------------------------------------------------------------------------------
-create database :db;
+
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_database WHERE datname = :'db'
+    ) THEN
+        EXECUTE format('CREATE DATABASE %I', :'db');
+    END IF;
+END$$;
+
 \c :db
 
 CREATE SCHEMA IF NOT EXISTS certify;
