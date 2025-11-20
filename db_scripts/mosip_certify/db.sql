@@ -5,11 +5,13 @@
 -- -------------------------------------------------------------------------------------------------
 
 DO $$
+DECLARE
+    dbname text := :'db';
 BEGIN
     IF NOT EXISTS (
-        SELECT 1 FROM pg_database WHERE datname = :'db'
+        SELECT 1 FROM pg_database WHERE datname = dbname
     ) THEN
-        EXECUTE format('CREATE DATABASE %I', :'db');
+        EXECUTE format('CREATE DATABASE %I', dbname);
     END IF;
 END$$;
 
