@@ -4,10 +4,7 @@
 -- file, You can obtain one at https://mozilla.org/MPL/2.0/.
 -- -------------------------------------------------------------------------------------------------
 
-SELECT format('CREATE DATABASE %I', :'db')
-WHERE NOT EXISTS (
-    SELECT FROM pg_database WHERE datname = :'db'
-)\gexec
+create database :db;
 
 
 \c :db
