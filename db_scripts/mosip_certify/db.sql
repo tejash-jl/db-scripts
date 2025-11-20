@@ -6,7 +6,7 @@
 
 DO $$
 DECLARE
-    dbname text := :'db';
+    dbname text := quote_literal(:'db')::text;
 BEGIN
     IF NOT EXISTS (
         SELECT 1 FROM pg_database WHERE datname = dbname
