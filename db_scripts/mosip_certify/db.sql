@@ -4,16 +4,7 @@
 -- file, You can obtain one at https://mozilla.org/MPL/2.0/.
 -- -------------------------------------------------------------------------------------------------
 
-DO $$
-DECLARE
-    dbname text := quote_literal(:'db')::text;
-BEGIN
-    IF NOT EXISTS (
-        SELECT 1 FROM pg_database WHERE datname = dbname
-    ) THEN
-        EXECUTE format('CREATE DATABASE %I', dbname);
-    END IF;
-END$$;
+create database :db;
 
 \c :db
 
