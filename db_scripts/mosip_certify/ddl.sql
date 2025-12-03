@@ -11,11 +11,11 @@ CREATE SERVER registry_server
 
 CREATE USER MAPPING FOR CURRENT_USER
     SERVER registry_server
-    OPTIONS (user 'postgres', password :'dbpass');
+    OPTIONS (user :'dbuser', password :'dbpass');
 
 CREATE USER MAPPING FOR grafana_read
     SERVER registry_server
-    OPTIONS (user 'postgres', password :'dbpass');
+    OPTIONS (user :'dbuser', password :'dbpass');
 
 CREATE FOREIGN TABLE verification_counters (
     id          integer NOT NULL,
