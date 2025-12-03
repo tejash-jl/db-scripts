@@ -31,5 +31,5 @@ fi
 echo "$DB_NAME"
 
 PGPASSWORD=$SU_USER_PWD psql -v ON_ERROR_STOP=1 -v db=$DB_NAME -v dbpass=$SU_USER_PWD --username=$SU_USER --host=$DB_SERVERIP --port=$DB_PORT --dbname=$DEFAULT_DB_NAME -f db.sql 
-PGPASSWORD=$SU_USER_PWD psql -v ON_ERROR_STOP=1 -v db=$DB_NAME -v dbpass=$SU_USER_PWD --username=$SU_USER --host=$DB_SERVERIP --port=$DB_PORT --dbname=$DEFAULT_DB_NAME -f ddl.sql
+PGPASSWORD=$SU_USER_PWD psql -v ON_ERROR_STOP=1 -v db=$DB_NAME -v dbpass=$SU_USER_PWD -v dbuser=$SU_USER --username=$SU_USER --host=$DB_SERVERIP --port=$DB_PORT --dbname=$DEFAULT_DB_NAME -f ddl.sql
 PGPASSWORD=$SU_USER_PWD psql -v ON_ERROR_STOP=1 -v db=$DB_NAME --username=$SU_USER --host=$DB_SERVERIP --port=$DB_PORT --dbname=$DEFAULT_DB_NAME -a -b -f dml.sql 
